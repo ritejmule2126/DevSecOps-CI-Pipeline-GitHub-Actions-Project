@@ -16,31 +16,38 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      # Checkout source code
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      # Setup Java 17
       - name: Setup JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      # Build Spring Boot Application
       - name: Build Application
         run: mvn clean install -DskipTests
 
+      # Install JFrog CLI (Stable Binary Method)
       - name: Install JFrog CLI
         run: |
-          curl -fL https://install.jfrog.io/cli/v2/install.sh | bash
+          wget https://releases.jfrog.io/artifactory/jfrog-cli/v2-jf/latest/jfrog-cli-linux-amd64/jf
+          chmod +x jf
+          sudo mv jf /usr/local/bin/jf
           jf --version
 
+      # Configure JFrog Connection
       - name: Configure JFrog
         run: |
-          jf config add \
+          jf config add my-server \
             --url "${{ secrets.JFROG_URL }}" \
             --access-token "${{ secrets.JFROG_TOKEN }}" \
             --interactive=false
 
+      # Upload Artifact to JFrog Repository
       - name: Upload Artifact to JFrog
         run: |
-          jf rt u "target/*.jar" "${{ secrets.JFROG_REPO }}" --flat=false
-
+          jf rt upload "target/*.jar" "${{ secrets.JFROG_REPO }}" --flat=false
