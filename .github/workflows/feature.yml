@@ -1,5 +1,11 @@
 name: DevSecOps CI Pipeline - Dev Branch
 
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+
 on:
   push:
     branches: [ "develop" ]
