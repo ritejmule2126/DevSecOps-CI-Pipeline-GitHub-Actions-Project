@@ -32,12 +32,13 @@ jobs:
         run: mvn clean install -DskipTests
 
       # Install JFrog CLI (Stable Binary Method)
-      - name: Install JFrog CLI
-        run: |
-          wget https://releases.jfrog.io/artifactory/jfrog-cli/v2-jf/latest/jfrog-cli-linux-amd64/jf
-          chmod +x jf
-          sudo mv jf /usr/local/bin/jf
-          jf --version
+- name: Install JFrog CLI
+  run: |
+    curl -fL https://install.jfrog.io -o install-jfrog.sh
+    chmod +x install-jfrog.sh
+    ./install-jfrog.sh
+    sudo mv jf /usr/local/bin/
+    jf --version
 
       # Configure JFrog Connection
       - name: Configure JFrog
