@@ -1,0 +1,28 @@
+name: DevSecOps CI Pipeline - Production
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+jobs:
+  build-job:
+    name: Build & Upload to JFrog
+    uses: ./.github/workflows/build.yml
+    secrets:
+      JFROG_URL: ${{ secrets.JFROG_URL }}
+      JFROG_TOKEN: ${{ secrets.JFROG_TOKEN }}
+      JFROG_REPO: ${{ secrets.JFROG_REPO }}
+  
+  # Production pipeline has minimal security scanning
+  docker-job:
+    name: Docker Build & Push
+    needs: build-job
+    uses: ./.github/workflows/docker-push.yml
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      JFROG_URL: ${{ secrets.JFROG_URL }}
+      JFROG_TOKEN: ${{ secrets.JFROG_TOKEN }}
+      JFROG_REPO: ${{ secrets.JFROG_REPO }}

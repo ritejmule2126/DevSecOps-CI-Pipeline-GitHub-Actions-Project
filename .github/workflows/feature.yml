@@ -1,0 +1,49 @@
+name: DevSecOps CI Pipeline - Dev Branch
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build-job:
+    name: Build & Upload to JFrog
+    uses: ./.github/workflows/build.yml
+    secrets:
+      JFROG_URL: ${{ secrets.JFROG_URL }}
+      JFROG_TOKEN: ${{ secrets.JFROG_TOKEN }}
+      JFROG_REPO: ${{ secrets.JFROG_REPO }}
+  
+  sonar-job:
+    name: SonarCloud Scan
+    needs: build-job
+    uses: ./.github/workflows/sonar.yml
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+      SONAR_ORG: ${{ secrets.SONAR_ORG }}
+  
+  snyk-job:
+    name: Snyk Security Scan
+    needs: build-job
+    uses: ./.github/workflows/snyk.yml
+    secrets:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  
+  test-job:
+    name: Unit Tests
+    needs: build-job
+    uses: ./.github/workflows/test.yml
+  
+  docker-job:
+    name: Docker Build & Push
+    needs: [sonar-job, snyk-job, test-job]
+    uses: ./.github/workflows/docker-push.yml
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      JFROG_URL: ${{ secrets.JFROG_URL }}
+      JFROG_TOKEN: ${{ secrets.JFROG_TOKEN }}
+      JFROG_REPO: ${{ secrets.JFROG_REPO }}
