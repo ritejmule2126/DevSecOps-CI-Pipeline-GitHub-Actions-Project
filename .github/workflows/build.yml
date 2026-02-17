@@ -28,21 +28,13 @@ jobs:
       - name: Build Application
         run: mvn clean install -DskipTests
 
-      - name: Install JFrog CLI
-        run: |
-          curl -fL https://install.jfrog.io -o install-jfrog.sh
-          chmod +x install-jfrog.sh
-          ./install-jfrog.sh
-          sudo mv jf /usr/local/bin/jf
-          jf --version
-
       - name: Configure JFrog
         run: |
-          jf config add my-server \
-            --url "${{ secrets.JFROG_URL }}" \
-            --access-token "${{ secrets.JFROG_TOKEN }}" \
+          jfrog config add my-server \
+            --url="${{ secrets.JFROG_URL }}" \
+            --access-token="${{ secrets.JFROG_TOKEN }}" \
             --interactive=false
 
       - name: Upload Artifact to JFrog
         run: |
-          jf rt upload "target/*.jar" "${{ secrets.JFROG_REPO }}" --flat=false
+          jfrog rt u "target/*.jar" "${{ secrets.JFROG_REPO }}" --flat=false
