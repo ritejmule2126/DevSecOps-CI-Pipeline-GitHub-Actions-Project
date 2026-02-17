@@ -3,20 +3,23 @@ name: Docker Build and Push
 on:
   workflow_call:
     secrets:
-      DOCKER_USERNAME:
-        required: true
-      DOCKER_PASSWORD:
-        required: true
       JFROG_URL:
         required: true
       JFROG_TOKEN:
         required: true
       JFROG_REPO:
         required: true
+      DOCKER_USERNAME:
+        required: true
+      DOCKER_PASSWORD:
+        required: true
+
+permissions:
+  contents: read
 
 jobs:
   docker:
-    name: Build and Push Docker Image
+    name: Docker Build and Push
     runs-on: self-hosted
 
     steps:
@@ -32,21 +35,21 @@ jobs:
       - name: Build Application
         run: mvn clean install -DskipTests
 
+      # ✅ Proper JFrog installation (NO curl)
       - name: Setup JFrog CLI
-        run: |
-          curl -fL https://install.jfrog.io/cli/v2/install | sh
-          jf --version
+        uses: jfrog/setup-jfrog-cli@v4
 
       - name: Configure JFrog
         run: |
-          jf config add --url ${{ secrets.JFROG_URL }} \
-            --access-token ${{ secrets.JFROG_TOKEN }} \
-            --interactive=false
+          jf config add my-server \
+            --url=${{ secrets.JFROG_URL }} \
+            --access-token=${{ secrets.JFROG_TOKEN }} \
+            --overwrite=true
 
       - name: Download Artifact from JFrog
         run: |
           mkdir -p target
-          jf rt dl "${{ secrets.JFROG_REPO }}/*.jar" --flat=true
+          jf rt dl "${{ secrets.JFROG_REPO }}/*.jar" target/ --flat=true
 
       - name: Get Commit SHA
         id: vars
