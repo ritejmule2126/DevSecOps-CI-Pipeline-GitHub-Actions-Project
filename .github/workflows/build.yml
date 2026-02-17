@@ -29,11 +29,11 @@ jobs:
         run: mvn clean install -DskipTests
 
       - name: Configure JFrog
-        run: |
-          jfrog config add my-server \
-            --url="${{ secrets.JFROG_URL }}" \
-            --access-token="${{ secrets.JFROG_TOKEN }}" \
-            --interactive=false
+  run: |
+    jfrog config add my-server \
+      --url=${{ secrets.JF_URL }} \
+      --access-token=${{ secrets.JF_ACCESS_TOKEN }} \
+      --overwrite=true
 
       - name: Upload Artifact to JFrog
         run: |
