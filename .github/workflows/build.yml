@@ -29,9 +29,10 @@ jobs:
         run: mvn clean install -DskipTests
       
       - name: Setup JFrog CLI
-        run: |
-          curl -fL https://install.jfrog.io/cli/v2/install | sh
-          jf --version
+  run: |
+    curl -fL https://install.jfrog.io/cli/v2/install.sh | bash
+    jf --version
+
       
       - name: Configure JFrog
         run: |
