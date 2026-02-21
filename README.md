@@ -16,7 +16,7 @@ graph TB
     end
 
     subgraph CI_Pipeline
-        C[GitHub Actions] -->|Trigger| D[Self-Hosted Runner (AWS EC2)]
+        C[GitHub Actions] -->|Trigger| D[Self Hosted Runner AWS EC2]
         D --> E[Checkout Code]
         E --> F[Maven Build]
         F --> G[SonarCloud Scan]
@@ -26,13 +26,13 @@ graph TB
     end
 
     subgraph Artifact_Storage
-        K[JFrog Artifactory (JAR Files)]
-        L[Docker Hub (Container Images)]
+        K[JFrog Artifactory JAR Files]
+        L[Docker Hub Container Images]
     end
 
-    subgraph Quality_&_Security
+    subgraph Quality_Security
         M[SonarCloud Reports]
-        N[Snyk Vulnerability Reports]
+        N[Snyk Reports]
     end
 
     F -->|Upload JAR| K
@@ -75,26 +75,60 @@ graph LR
 ## 📸 Pipeline Visualization
 
 ### Self-Hosted Runner Setup
+
 - AWS EC2 Build Server  
+![AWS EC2 Build Server](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/EC2-instance.png)
+
 - GitHub Self-Hosted Runner Active  
+![GitHub Self-Hosted Runner Active](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/Runner-active.png)
+
+---
 
 ### Tool Dashboards
+
 - SonarCloud Code Quality Dashboard  
+![SonarCloud Dashboard](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/sonarcloud-dashboard.png)
+
 - Snyk Security Vulnerability Dashboard  
+![Snyk Dashboard](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/snyk-dashboard.png)
+
 - JFrog Artifactory Repository  
+![JFrog Repository](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/jfrog-repo.png)
+
 - Docker Hub Container Registry  
+![Docker Hub Repository](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/dockerhub-repo.png)
+
+---
 
 ### GitHub Configuration
+
 - GitHub Secrets Configuration  
+![GitHub Secrets](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/github-secrets.png)
+
 - GitHub Actions Workflow Structure  
+![Workflow Files](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/workflow-files.png)
+
+---
 
 ### Pipeline Execution
+
 - CI Pipeline Execution Stages  
+![Pipeline Stages](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/pipeline-stages.png)
+
 - Build Stage – Successful  
+![Build Success](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/build-success.png)
+
 - SonarCloud Scan – Successful  
+![Sonar Success](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/sonar-success.png)
+
 - Snyk Security Scan – Successful  
+![Snyk Success](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/snyk-success.png)
+
 - Unit Tests – Successful  
+![Unit Test Success](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/test-success.png)
+
 - Docker Build & Push – Successful  
+![Docker Build Success](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/docker-success.png)
 
 ---
 
