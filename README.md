@@ -77,7 +77,7 @@ graph LR
 ### Self-Hosted Runner Setup
 
 - AWS EC2 Build Server  
-![AWS EC2 Build Server](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/EC2-instance.png)
+![AWS EC2 Build Server](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/EC2-Instance.png)
 
 - GitHub Self-Hosted Runner Active  
 ![GitHub Self-Hosted Runner Active](https://raw.githubusercontent.com/ritejmule2126/DevSecOps-CI-Pipeline-GitHub-Actions-Project/main/screenshots/Runner-active.png)
