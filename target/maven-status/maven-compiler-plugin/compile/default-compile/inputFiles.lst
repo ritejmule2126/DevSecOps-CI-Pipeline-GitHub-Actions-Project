@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 /home/admin/DevSecOps-CI-Pipeline-GitHub-Actions-Project/src/main/java/com/example/Application.java
 /home/admin/DevSecOps-CI-Pipeline-GitHub-Actions-Project/src/main/java/com/example/HelloController.java
+=======
+/home/ubuntu/DevSecOps-CI-Pipeline-GitHub-Actions-Project/src/main/java/com/example/Application.java
+/home/ubuntu/DevSecOps-CI-Pipeline-GitHub-Actions-Project/src/main/java/com/example/HelloController.java
+>>>>>>> main
